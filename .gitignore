@@ -38,3 +38,8 @@ Desktop.ini
 
 # Log files
 *.log
+
+# Application specific
+config.yaml
+checkin_records.db
+*.csv
