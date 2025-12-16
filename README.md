@@ -105,6 +105,24 @@ POST http://服务器IP:5000/checkin
 
 ### 客户端示例
 
+#### 方法1: 使用提供的客户端脚本（推荐）
+
+交互模式：
+```bash
+python client_example.py
+```
+
+命令行模式：
+```bash
+# 自动获取学生ID
+python client_example.py http://192.168.1.100:5000 checkin123
+
+# 指定学生ID
+python client_example.py http://192.168.1.100:5000 checkin123 student001
+```
+
+#### 方法2: 使用requests库
+
 Python客户端示例：
 
 ```python
@@ -134,6 +152,8 @@ check-class-begin-teacher/
 ├── api_server.py          # API服务器模块
 ├── config_manager.py      # 配置管理模块
 ├── checkin_logger.py      # 签到记录模块
+├── client_example.py      # 客户端示例脚本
+├── test_modules.py        # 模块验证测试
 ├── requirements.txt       # Python依赖
 ├── config.yaml.example    # 配置文件示例
 ├── config.yaml           # 实际配置文件（需创建）
