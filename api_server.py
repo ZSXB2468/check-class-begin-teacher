@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify
 from config_manager import ConfigManager
 from checkin_logger import CheckinLogger
 import threading
+import secrets
 
 
 class APIServer:
@@ -51,9 +52,9 @@ class APIServer:
                 student_id = data.get('id')
                 password = data.get('passwd')
                 
-                # 验证密码
+                # 使用常量时间比较防止时序攻击
                 correct_password = self.config_manager.get_password()
-                if password != correct_password:
+                if not secrets.compare_digest(password, correct_password):
                     return jsonify(False)
                 
                 # 记录签到
@@ -99,9 +100,12 @@ class APIServer:
         self.app.run(host=host, port=port, debug=False, use_reloader=False)
     
     def stop(self):
-        """停止API服务器"""
-        # Flask服务器无法简单停止，需要重启程序或使用更复杂的方法
-        # 这里设置标志位，实际实现中可以使用werkzeug的shutdown功能
+        """停止API服务器
+        
+        注意：由于Flask的限制，服务器无法完全停止。
+        需要重启程序才能完全停止服务器。
+        这个方法主要用于更新UI状态。
+        """
         if not self.is_running:
             return False, "服务器未运行"
         
